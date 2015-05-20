@@ -29,6 +29,8 @@
 
 package oru.aass.CS;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Hadi Banaee <Örebro University, AASS>
@@ -182,6 +184,35 @@ public class Region extends Element{
 		return getCentroidAsPoint(new String(getId()+".CENTROID"));
 	}
 	
+        
+        
+	// returns true if the region contains the given point in domain, otherwise false
+	public boolean contains(Point p, Domain d, double precision) {
+		if (!isOK() || !p.isOK() || !domainOK(d) || !p.domainOK(d)) return false;
+		
+		ArrayList<Double> values = new ArrayList<Double>();
+		for (int i = 0; i < q.length; i++) {
+			String qd = q[i];
+			values.add(p.getValue(qd));	
+		}
+		
+		// test each inequality in system
+		for (int m = 0; m < A.length; m++) {
+			double value = 0.0;
+			for (int n = 0; n < A[m].length; n++) {
+				value += A[m][n] * values.get(n);
+			}
+			if (value > (b[m] + precision)) return false;
+		}
+		return true;
+	}
+	
+	public boolean contains(Point p, Domain d) {
+//		return contains(p, d, Globals.roundPrecision);
+                return contains(p, d, 0.00000001);
+	}
+        
+        
         public boolean isProperty() {
 		return q.length == 1;
 	}
@@ -284,6 +315,18 @@ public class Region extends Element{
 	public Point[] getVPolytope() {
 		return vPolytope;
 	}
+
+    
+        public boolean domainOK(Domain d) {
+		if (!d.getId().equals(domainId)) return false;
+		for (int i = 0; i < q.length; i++) {
+			if (d.getQualityDimension(q[i]) == null) return false;
+		}
+		
+		return true;
+	}
+        
+        
 
     
     

@@ -101,6 +101,31 @@ public class Concept extends Element{
         public boolean hasRegionInDomain(String domainId) {
 		return getRegion(domainId) != null;
 	}
+
+    
+        public boolean contains(Instance i, Domain[] domains) {
+		return isParentConceptOf(i, domains);
+	}
+        
+        // returns true if the given instance i is inside of all of the concept's regions for the given domains.
+	// if the concept or instance is undefined for any of the domains it will return false.
+	public boolean isParentConceptOf(Instance instance, Domain[] domains) {
+		for (int i = 0; i < domains.length; i++){
+			Domain curDomain = domains[i];
+			if (curDomain == null) return false;
+			String curDomainId = curDomain.getId();
+			if (!regions.containsKey(curDomainId)) return false;
+			if (!instance.hasPointInDomain(curDomainId)) return false;
+			
+			Region curRegion = regions.get(curDomainId);
+			Point curPoint = instance.getPoint(curDomainId);
+			
+//			if (!curRegion.contains(curPoint, curDomain, Globals.roundPrecision)) return false;
+                        if (!curRegion.contains(curPoint, curDomain, 0.00000001)) return false;
+		}
+		
+		return true;
+	}
 	
     
 }

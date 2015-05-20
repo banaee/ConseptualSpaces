@@ -38,6 +38,7 @@ import java.util.Hashtable;
  */
 public class Model {
     
+    
         public static final int MODEL_OK = 0;
 
         // 5-tuple from Conceptual Space Algebra
@@ -45,7 +46,7 @@ public class Model {
     private Hashtable<String,Concept> concepts = new Hashtable<String,Concept>();
 //    private Hashtable<String,ContrastClass> contrastClasses = new Hashtable<String,ContrastClass>();
     private Hashtable<String,Instance> instances = new Hashtable<String,Instance>();
-//    private Hashtable<String,Context> contexts = new Hashtable<String,Context>();
+    private Hashtable<String,Context> contexts = new Hashtable<String,Context>();
 
 //    private HashSet<String> allURIs = new HashSet<String>();
 //
@@ -165,6 +166,34 @@ public class Model {
     }
 
     
+//  Context--------------------------------------------------------------------
+    public void addContext(String contextId, Context context) {
+        contexts.put(contextId, context);
+//        allURIs.add(contextId);
+    }
+	
+    public void addContext(Context context) {
+        addContext(context.getId(), context);
+    }
+	
+    public void removeContext(String contextId) {
+        contexts.remove(contextId);
+//        allURIs.remove(contextId);
+    }
+	
+    public void removeContext(Context context) {
+        contexts.remove(context.getId());
+//        allURIs.remove(context.getId());
+    }
+	
+    public Context getContext(String contextId) {
+        return contexts.get(contextId);
+    }
+	
+    public Context[] getContexts() {
+        return contexts.values().toArray(new Context[0]);
+    }
+
     
 //    public ArrayList<Domain> getIntersectionOfDomains            
 //    public ArrayList<Domain> getUnionOfDomains
