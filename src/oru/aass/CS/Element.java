@@ -1,8 +1,11 @@
-/*
+/**
  * The MIT License
  *
  * Copyright 2015 Hadi Banaee <Örebro University, AASS>.
- *
+ * 
+ * Copyright (c) 2009, Benjamin Adams
+ * All rights reserved.
+ *------------------------------------------------------------
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -22,13 +25,58 @@
  * THE SOFTWARE.
  */
 
-package oru.aass.CSElements;
+package oru.aass.CS;
 
 /**
  *
  * @author Hadi Banaee <Örebro University, AASS>
  */
-public class Consept {
+public class Element {
+    
+    
+      
+    // attributes
+    private String id; // absolute or fragment URI
+
+    // elements
+    private String label;
+    private String description;
+    
+    public Element(String id, String label, String description) {
+        this.id = new String(id);
+        this.label = new String(label);
+        this.description = new String(description);
+    }
+    
+    public Element(String id) {
+        this.id = new String(id);
+        label = "";
+        description = "";
+    }
+
+    public void setId(String id) {
+        this.id = new String(id);
+    }
+
+    public String getId() {
+        return id;
+    }
+    
+    public void setLabel(String label) {
+        this.label = new String(label);
+    }
+
+    public String getLabel() {
+        return label;
+    }
+    
+    public void setDescription(String description) {
+        this.description = new String(description);
+    }
+
+    public String getDescription() {
+        return description;
+    }
     
     
     
